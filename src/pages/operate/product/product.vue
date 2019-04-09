@@ -1,64 +1,5 @@
 <template>
   <v-content class="operate-product-wrap">
-    
-    
-    <div class="data-gird" :style="`height:${gridHeight};width:${gridWidth};text-align:left`">
-      <v-data-table :data="getData" :columns="columns" :currentData="cartlistData" ref="singleList">
-        <template slot="th" slot-scope="props">
-          <strong v-if="props.column.field=='album'">操作</strong>
-          <strong v-else v-html="props.title"></strong>
-        </template>
-        <template slot="td" slot-scope="props">
-          <div v-if="props.column.field=='spStatus'">
-            <div v-if="props.item.spStatus=='0'">待发布</div>
-            <div v-if="props.item.spStatus=='1'" style="color:green">预告</div>
-            <div v-if="props.item.spStatus=='2'" style="color:green">在售</div>
-            <div v-if="props.item.spStatus=='3'"  style="color:red">过期</div>
-            <div v-if="props.item.spStatus=='4'">下线</div>
-          </div>
-          <div v-else-if="props.column.field=='album'">
-            <div v-if="props.item.spStatus=='0'">
-              <v-button type="primary" size="small" @click="online(props.item)">上线</v-button>
-              <v-button type="primary" size="small" @click="offline(props.item)" disabled>下线</v-button>
-              <v-button type="primary" size="small" @click="showEditmodel(props.item)">编辑</v-button>
-              <v-button type="primary" size="small" @click="deleteproduct(props.item)">删除</v-button>
-              <v-button type="primary" size="small" @click="showDetailmodel(props.item)">详情</v-button>
-            </div>
-            <div v-if="props.item.spStatus=='1'">
-              <v-button type="primary" size="small" @click="online(props.item)" disabled>上线</v-button>
-              <v-button type="primary" size="small" @click="offline(props.item)">下线</v-button>
-              <v-button type="primary" size="small" @click="showEditmodel(props.item)" disabled>编辑</v-button>
-              <v-button type="primary" size="small" @click="deleteproduct(props.item)" disabled>删除</v-button>
-              <v-button type="primary" size="small" @click="showDetailmodel(props.item)">详情</v-button>
-            </div>
-            <div v-if="props.item.spStatus=='2'">
-              <v-button type="primary" size="small" @click="online(props.item)" disabled>上线</v-button>
-              <v-button type="primary" size="small" @click="offline(props.item)">下线</v-button>
-              <v-button type="primary" size="small" @click="showEditmodel(props.item)" disabled>编辑</v-button>
-              <v-button type="primary" size="small" @click="deleteproduct(props.item)" disabled>删除</v-button>
-              <v-button type="primary" size="small" @click="showDetailmodel(props.item)">详情</v-button>
-            </div>
-            <div v-if="props.item.spStatus=='3'">
-              <v-button type="primary" size="small" @click="online(props.item)" disabled>上线</v-button>
-              <v-button type="primary" size="small" @click="offline(props.item)" >下线</v-button>
-              <v-button type="primary" size="small" @click="showEditmodel(props.item)" disabled>编辑</v-button>
-              <v-button type="primary" size="small" @click="deleteproduct(props.item)">删除</v-button>
-              <v-button type="primary" size="small" @click="showDetailmodel(props.item)">详情</v-button>
-            </div>
-            <div v-if="props.item.spStatus=='4'">
-              <v-button type="primary" size="small" @click="online(props.item)">上线</v-button>
-              <v-button type="primary" size="small" @click="offline(props.item)" disabled>下线</v-button>
-              <v-button type="primary" size="small" @click="showEditmodel(props.item)">编辑</v-button>
-              <v-button type="primary" size="small" @click="deleteproduct(props.item)">删除</v-button>
-              <v-button type="primary" size="small" @click="showDetailmodel(props.item)">详情</v-button>
-            </div>
-          </div>
-          <span v-else v-html="props.content"></span>
-        </template>
-      </v-data-table>
-      <br>
-      <v-pagination style="text-align:right;" show-quick-jumper :total="dataTotal" @change="pageChange" :value="currentPage"></v-pagination>
-    </div>
     <new-add :addVisible="addVisible" v-on:changeBul="bulState"></new-add>
     <pro-edit :editVisible="editVisible" :specialId="selectSpecial" v-on:changeBul="bulState"></pro-edit>
     <pro-detail :detailVisible="detailVisible" :specialId="selectSpecial" v-on:changeBul="bulState"></pro-detail>
@@ -71,6 +12,7 @@ import transform from "@/util/transform.js";
 import newAdd from "./newadd/newadd";
 import proEdit from "./proedit/proedit";
 import proDetail from "./prodetail/prodetail";
+import G2Line from "@/components/cg2line/cg2line";
 import moment from "moment";
 export default {
   name: "operate-product",
@@ -317,6 +259,7 @@ export default {
   components: {
     newAdd,
     proEdit,
+    G2Line: G2Line,
     proDetail
   }
 };

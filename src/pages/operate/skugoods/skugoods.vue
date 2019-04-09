@@ -1,12 +1,12 @@
 <template>
   <v-content class="operate-goods-wrap">
-    <!-- <count-form
+    <count-form
       :ruleForm='ruleForm'
       @updaydata='updaydata'
       @updayalldata='updayalldata'
       @downloadFile='downloadFile'
       @onSearch='onSearch'>
-    </count-form> -->
+    </count-form>
     <br>
 
     <div
@@ -15,37 +15,7 @@
     >
       <v-data-table :data="getData" :currentData="cartlistData" :columns="columns">
         <template slot="td" slot-scope="props">
-          <div v-if="props.column.field=='photo'">
-            <img :src="props.content" style="width:50px;height:50px" :key="props.content" alt>
-          </div>
-          <div v-else-if="props.column.field=='status'">
-            <div v-if="props.content=='0'" style="color:green">在售</div>
-            <div v-if="props.content=='1'">下线</div>
-            <div v-if="props.content=='2'" style="color:red">下架</div>
-          </div>
-          <div v-else-if="props.column.field=='skuOperation'">
-            <div v-if="props.item.status=='0'">
-              <v-button type="primary" size="small" @click="online(props.item)" disabled>上线</v-button>
-              <v-button type="primary" size="small" @click="offline(props.item)">下线</v-button>
-              <v-button type="primary" size="small" @click="deleteproduct(props.item)">下架</v-button>
-              <v-button type="primary" size="small" @click="showEditmodel(props.item)" >编辑</v-button>
-
-            </div>
-            <div v-if="props.item.status=='1'">
-              <v-button type="primary" size="small" @click="online(props.item)">上线</v-button>
-              <v-button type="primary" size="small" @click="offline(props.item)" disabled>下线</v-button>
-              <v-button type="primary" size="small" @click="deleteproduct(props.item)">下架</v-button>
-              <v-button type="primary" size="small"  @click="showEditmodel(props.item)">编辑</v-button>
-
-            </div>
-            <div v-if="props.item.status=='2'">
-              <v-button type="primary" size="small" @click="online(props.item)">上线</v-button>
-              <v-button type="primary" size="small" @click="offline(props.item)">下线</v-button>
-              <v-button type="primary" size="small" @click="deleteproduct(props.item)" disabled>下架</v-button>
-              <v-button type="primary" size="small" @click="showEditmodel(props.item)">编辑</v-button>
-            </div>
-          </div>
-          <span v-else v-html="props.content"></span>
+          <span  v-html="props.content"></span>
         </template>
       </v-data-table>
     </div>
@@ -115,25 +85,22 @@ export default {
     this.gridHeight = document.body.clientHeight - 260 + "px";
     this.gridWidth = document.body.clientWidth - 230 + "px";
     this.columns = [
-      { title: "SPUID", field: "spu", width: "5%" },
-      { title: "SKUID", field: "skuErp", width: "5%" },
-      { title: "商品图", field: "photo", width: "10%" },
-      { title: "商品中文名", field: "skuName", width: "20%" },
-      { title: "商品成本价", field: "costPrice", width: "5%" },
-      { title: "商品市场价", field: "marketPrice", width: "5%" },
-      { title: "商品销售价", field: "sellPrice", width: "5%" },
-      { title: "商品佣金", field: "commission", width: "5%" },
-      { title: "TaxCode", field: "taxCode", width: "5%" },
-      { title: "商品推荐语", field: "recommend", width: "20%" },
-      { title: "商品库存", field: "quantity", width: "5%" },
-      { title: "安全库存比例", field: "safeRateShow", width: "5%" },
-      { title: "可用活动库存", field: "availableQuantity", width: "5%" },
-      { title: "商品状态", field: "status", width: "10%" },
-      { title: "更新时间", field: "lastUpdateTime", width: "20%" },
-      { title: "操作", field: "skuOperation", width: "15%" }
+      { title: "时间", field: "spu", width: "5%" },
+      { title: "数值", field: "skuErp", width: "5%" },
+      { title: "标准值", field: "skuName", width: "20%" },
+      { title: "差值", field: "costPrice", width: "5%" },
     ];
   },
   methods: {
+    updaydata(){
+
+    },
+    updayalldata(){
+
+    },
+    downloadFile(){
+
+    },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },

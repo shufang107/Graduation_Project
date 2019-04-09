@@ -10,10 +10,10 @@ const operate = resolve => require(['@/pages/operate/operate'],resolve);
 const operateSpugoods = resolve => require(['@/pages/operate/spugoods/spugoods'],resolve);
 const operateSkugoods = resolve => require(['@/pages/operate/skugoods/skugoods'],resolve);
 const operateProduct = resolve => require(['@/pages/operate/product/product'],resolve);
-const operateFlashsale = resolve => require(['@/pages/operate/flashsale/flashsale'],resolve);
-const operateAdvertisement = resolve => require(['@/pages/operate/advertisement/advertisement'],resolve);
-const operateGift = resolve => require(['@/pages/operate/gift/gift'],resolve);
-const operateGiftsale = resolve => require(['@/pages/operate/giftsale/giftsale'],resolve);
+// const operateFlashsale = resolve => require(['@/pages/operate/flashsale/flashsale'],resolve);
+// const operateAdvertisement = resolve => require(['@/pages/operate/advertisement/advertisement'],resolve);
+// const operateGift = resolve => require(['@/pages/operate/gift/gift'],resolve);
+// const operateGiftsale = resolve => require(['@/pages/operate/giftsale/giftsale'],resolve);
 
 //客户模块
 const user = resolve => require(['@/pages/user/user'], resolve);
@@ -77,26 +77,26 @@ export default [
                 path: 'operate-product',
                 component:operateProduct
             },
-            {
-                name:'operate-flashsale',
-                path: 'operate-flashsale',
-                component:operateFlashsale 
-            },
-            {
-                name:'operate-advertisement',
-                path: 'operate-advertisement',
-                component:operateAdvertisement
-            },
-            {
-                name:'operate-gift',
-                path: 'operate-gift',
-                component:operateGift
-            },
-            {
-                name:'operate-giftsale',
-                path:'operate-giftsale',
-                component:operateGiftsale
-            }
+            // {
+            //     name:'operate-flashsale',
+            //     path: 'operate-flashsale',
+            //     component:operateFlashsale 
+            // },
+            // {
+            //     name:'operate-advertisement',
+            //     path: 'operate-advertisement',
+            //     component:operateAdvertisement
+            // },
+            // {
+            //     name:'operate-gift',
+            //     path: 'operate-gift',
+            //     component:operateGift
+            // },
+            // {
+            //     name:'operate-giftsale',
+            //     path:'operate-giftsale',
+            //     component:operateGiftsale
+            // }
         ]
     },
 

@@ -1,60 +1,10 @@
 <template>
   <div class="operate-goods-wrap">
-    <count-form
-      :ruleForm='ruleForm'
-      @updaydata='updaydata'
-      @updayalldata='updayalldata'
-      @downloadFile='downloadFile'
-      @onSearch='onSearch'>
-    </count-form>
     <br>
     <div class="data-gird" :style="`height:${gridHeight};width:${gridWidth};text-align:left;margin-bottom:10px `">
       <v-data-table :data="getData" :currentData="cartlistData" :columns="columns">
         <template slot="td" slot-scope="props">
-          <div v-if="props.column.field=='photo'">
-            <img :src="props.content" style="width:50px;height:50px" :key="props.content" alt>
-          </div>
-          <div
-            v-else-if="props.column.field=='costPrice'"
-          >{{props.item.unit}}{{props.item.costPrice}}</div>
-          <div
-            v-else-if="props.column.field=='marketPrice'"
-          >{{props.item.unit}}{{props.item.marketPrice}}</div>
-          <div
-            v-else-if="props.column.field=='sellPrice'"
-          >{{props.item.unit}}{{props.item.sellPrice}}</div>
-          <div
-            v-else-if="props.column.field=='commission'"
-          >{{props.item.unit}}{{props.item.commission}}</div>
-          <div v-else-if="props.column.field=='status'">
-            <div v-if="props.content=='0'" style="color:green">在售</div>
-            <div v-if="props.content=='1'">下线</div>
-            <div v-if="props.content=='2'" style="color:red">下架</div>
-          </div>
-          <div v-else-if="props.column.field=='spuOperation'">
-            <div v-if="props.item.status=='0'">
-              <v-button type="primary" size="small" @click="online(props.item)" disabled>上线</v-button>
-              <v-button type="primary" size="small" @click="offline(props.item)">下线</v-button>
-              <v-button type="primary" size="small" @click="deleteproduct(props.item)">下架</v-button>
-              <!-- <v-button type="primary" size="small" @click="showEditmodel(props.item)">编辑</v-button> -->
-              <v-button type="primary" size="small" @click="showDetailmodel(props.item)">详情</v-button>
-            </div>
-            <div v-if="props.item.status=='1'">
-              <v-button type="primary" size="small" @click="online(props.item)">上线</v-button>
-              <v-button type="primary" size="small" @click="offline(props.item)" disabled>下线</v-button>
-              <v-button type="primary" size="small" @click="deleteproduct(props.item)">下架</v-button>
-              <!-- <v-button type="primary" size="small" @click="showEditmodel(props.item)">编辑</v-button> -->
-              <v-button type="primary" size="small" @click="showDetailmodel(props.item)">详情</v-button>
-            </div>
-            <div v-if="props.item.status=='2'">
-              <v-button type="primary" size="small" @click="online(props.item)">上线</v-button>
-              <v-button type="primary" size="small" @click="offline(props.item)">下线</v-button>
-              <v-button type="primary" size="small" @click="deleteproduct(props.item)" disabled>下架</v-button>
-              <!-- <v-button type="primary" size="small" @click="showEditmodel(props.item)">编辑</v-button> -->
-              <v-button type="primary" size="small" @click="showDetailmodel(props.item)" >详情</v-button>
-            </div>
-          </div>
-          <span v-else v-html="props.content"></span>
+          <span v-html="props.content"></span>
         </template>
       </v-data-table>
     </div>
@@ -100,7 +50,6 @@ import editSpu from "./editspu/editspu";
 import detailSpu from "./detailspu/detailspu";
 import request from "@/util/ajax.js";
 import setting from "@/setting/index.js";
-import CountForm from '@/components/count_form/countform'
 
 export default {
   name: "operate-goods",
@@ -143,12 +92,10 @@ export default {
     this.gridHeight = document.body.clientHeight - 190 + "px";
     this.gridWidth = document.body.clientWidth - 190 + "px";
     this.columns = [
-      { title: "SPUID",field: "spu", width: "5%"},
-      { title: "商品图", field: "photo", width: "5%" },
-      { title: "商品中文名", field: "spuName", width: "20%" },
-      { title: "SKU数量", field: "skuCount",width: "5%" },
-      { title: "商品状态", field: "status",width: "5%" },
-      { title: "操作", field: "spuOperation" ,width: "20%"}
+      { title: "时间",field: "spu"},
+      { title: "数值", field: "spuName"},
+      { title: "标准值", field: "skuCount"},
+      { title: "差值", field: "status"},
     ];
   },
   methods: {
@@ -363,7 +310,6 @@ export default {
   components: {
     editSpu,
     detailSpu,
-    CountForm:CountForm
   }
 };
 </script>
