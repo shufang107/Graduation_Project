@@ -1,47 +1,29 @@
 <template>
     <v-content class="shopownerenroll">
-        <v-form class="search-from" :model="ruleForm" ref="ruleForm">
-            <v-row class="demo-row">
-                <v-col span="18">
-                    <v-form-item label="开始时间"  prop="startTime">
-                        <v-date-picker style="width: 100px;" placeholder="选择开始时间"  clearable v-model="ruleForm.startTime"></v-date-picker>
-                    </v-form-item>
-                    <v-form-item label="至" prop="endTime">
-                        <v-date-picker style="width: 100px;" placeholder="选择结束时间" clearable v-model="ruleForm.endTime"></v-date-picker>
-                    </v-form-item>
-                    <v-form-item>
-                        <v-button type="primary" @click="onSearch(ruleForm)">查询</v-button>&nbsp;&nbsp;
-                        <v-button type="ghost" @click.prevent="resetForm('ruleForm')">清空条件</v-button>&nbsp;&nbsp;
-                        <v-button type="primary" @click="downloadFile">下载结果</v-button>&nbsp;&nbsp;
-                        <v-button type="primary" @click="updaydata">更新当天数据</v-button>&nbsp;&nbsp;
-                        <v-button type="primary" @click="updayalldata">更新全部数据</v-button>
-                   </v-form-item>
-                </v-col>
-            </v-row>
-        </v-form>
-       <br>
-    
-       <div :style="`height:${gridHeight};width:${gridWidth};text-align:left`">
-           <v-data-table :data='getData' :columns='columns' :currentData='cartlistData'>
-               <template slot="td" slot-scope="props">
-                    <div v-if="props.column.field == 'saleRate'">
-                        {{((props.content*100).toFixed(2))}}%
-                    </div>
-                    <div v-else-if="props.column.field == 'totalTransaction'">
-                        ${{props.content}}
-                    </div>
-                    <span v-else v-html = "props.content"></span>
-               </template>
-           </v-data-table>
-           <br>
-            <v-pagination
-                style="text-align:right;"
-                show-quick-jumper
-                :total="dataTotal"
-                :show-total="showTotal"
-                @change="pageChange"
-            ></v-pagination>
-        </div>  
+        <v-row type="flex">
+        <v-col span="24">
+            <h1>今日数据曲线</h1>
+        </v-col>
+        </v-row>
+
+        <v-row type="flex">
+        <v-col span="24">
+            <g2-line :charData="servenData" id='c8'></g2-line>
+        </v-col>
+        </v-row>
+        
+        <br>
+        <v-row type="flex">
+        <v-col span="24">
+            <h1>历史数据曲线</h1>
+        </v-col>
+        </v-row>
+
+        <v-row type="flex">
+        <v-col span="24">
+            <g2-line :charData="thirtyData" id='c9'></g2-line>
+        </v-col>
+        </v-row>
     </v-content>
 </template>
 
@@ -50,11 +32,20 @@ import request from "@/util/ajax.js";
 import transform from "@/util/transform.js";
 import api from "./../api.js";
 import setting from "@/setting/index.js";
+import moment from 'moment'; 
+import momenttimezone from 'moment-timezone';
+import G2Line from "@/components/cg2line/cg2line";
 
 export default {
     name:"count-shopownerenroll",
     data() {
         return {
+            servenData: [],
+            fourteenData: [],
+            thirtyData:[],
+            servenSaleData: [],
+            fourteenSaleData: [],
+            thirtySaleData:[],
             cartlistData:[],    //更新表格组件数据的数组
             columns: [],
             dataTotal:0,
@@ -72,19 +63,81 @@ export default {
         };
     },
     created() {
-        this.gridHeight = document.body.clicentHeight - 280 + 'px';
-        this.gridWidth = document.body.clicentWidth - 180 + 'px';
-        this.columns = [
-            { title: "日期", field: "date"},
-            { title: "销售SKU", field: "skuCount"},
-            { title: "在售SKU", field: "viableSkuCount" },
-            { title: "动销比", field: "saleRate"},
-            { title: "商品销量", field: "productCount"},
-            { title: "销售额", field: "totalTransaction" },
-        ];
+        this.getorderchar();
     },
     mounted() {},
     methods: {
+         getdate(){
+            var currentTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+            var utcTime = moment(new Date()).utc().format('YYYY-MM-DD HH:mm:ss');   
+            var amTime = moment.tz(new Date(), "America/Los_Angeles").format('YYYY-MM-DD HH:mm:ss');    
+            var timeDiff = moment(currentTime).unix() - moment(utcTime).unix(); 
+            var amtimeDiff = moment(amTime).unix() - moment(utcTime).unix(); 
+            var amunixTime = moment(currentTime).unix() - timeDiff + amtimeDiff;
+            this.endamtime = moment(amunixTime * 1000).format('YYYY-MM-DD') + '';
+            //获取前30天日期
+            this.lart30 = moment().subtract('days', 29).format('YYYY-MM-DD');
+            this.dayquery = ' {date:"'+ this.endamtime + '"}'; 
+            return this.dayquery,this.lart30,this.endamtime;
+        },
+        getorderchar() {
+            var _this = this;
+            this.getdate();
+            return _this.$http
+            .get(api.getMongoFindResult,{
+                params:{
+                collection:'day_order',
+                currentPage: 1,
+                numsPerPage: 30,
+                query:`{"date":{$gte:"${_this.lart30}",$lte:"${_this.endamtime}"}}`,
+                sort:'{date:-1}',
+                }
+            })
+            .then(res => {
+                var or_seventemparr = [];
+                var or_fourteentemparr = [];
+                var or_thirtytemparr = [];
+                var sa_seventemparr = [];
+                var sa_fourteentemparr = [];
+                var sa_thirtytemparr = [];
+                for(var i=0 ; i < 7 ; i++){
+                or_seventemparr.push({
+                    year : res.data.items[i].date,
+                    value : res.data.items[i].orderCount
+                });
+                sa_seventemparr.push({
+                    year : res.data.items[i].date,
+                    value : res.data.items[i].totalTransaction
+                })
+                }
+                for(var i=0 ; i < 14 ; i++){
+                or_fourteentemparr.push({
+                    year : res.data.items[i].date,
+                    value : res.data.items[i].orderCount
+                });
+                sa_fourteentemparr.push({
+                    year : res.data.items[i].date,
+                    value : res.data.items[i].totalTransaction
+                })
+                }
+                for(var i=0 ; i < res.data.items.length ; i++){
+                or_thirtytemparr.push({
+                    year : res.data.items[i].date,
+                    value : res.data.items[i].orderCount
+                });
+                sa_thirtytemparr.push({
+                    year : res.data.items[i].date,
+                    value : res.data.items[i].totalTransaction
+                })
+                }
+                _this.servenData = or_seventemparr;
+                _this.fourteenData = or_fourteentemparr;
+                _this.thirtyData = or_thirtytemparr;
+                _this.servenSaleData = sa_seventemparr;
+                _this.fourteenSaleData = sa_fourteentemparr;
+                _this.thirtySaleData = sa_thirtytemparr;
+            })
+        },
         updaydata(){
           var _this = this;
           return _this.$http
@@ -196,6 +249,9 @@ export default {
         location.href=url;
         },
     },
+    components: {
+        G2Line: G2Line,     
+    }
     
 }
 </script>

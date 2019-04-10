@@ -39,7 +39,7 @@
           :value="currentPage"
           :show-total="showTotal"
         ></v-pagination>
-      <edit-sku :editVisible="editVisible" :listData="listData" v-on:changeBul="bulState"></edit-sku>
+      <!-- <edit-sku :editVisible="editVisible" :listData="listData" v-on:changeBul="bulState"></edit-sku> -->
       </v-col>
     </v-row>
   </v-content>
@@ -48,7 +48,7 @@
 <script>
 import api from "./api.js";
 import transform from "@/util/transform.js";
-import editSku from "./editsku/editsku";
+// import editSku from "./editsku/editsku";
 import request from "@/util/ajax.js";
 import setting from "@/setting/index.js";
 import CountForm from '@/components/count_form/countform'
@@ -332,7 +332,6 @@ export default {
   },
   //注册组件（弹框）
   components: {
-    editSku,
     CountForm:CountForm
   }
 };

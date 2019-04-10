@@ -1,55 +1,20 @@
 <template>
     <v-content class="user-partners-wrap">
-        <v-form class="search-form" :model="ruleForm" ref="ruleForm">
-            <v-row class="demo-row">
-                <v-col span="24">
-                    <v-form-item label="用户ID" prop="userId">
-                        <v-input style="width: 150px;" v-model="ruleForm.userId" placeholder="请输入，以‘，’分隔"></v-input>
-                    </v-form-item>
-                     <v-form-item label="用户昵称" prop="nickname">
-                        <v-input style="width: 100px;" v-model="ruleForm.nickname" placeholder="请输入"></v-input>
-                    </v-form-item>
-                    <v-form-item label="店铺ID" prop="typeId">
-                        <v-input style="width: 100px;" v-model="ruleForm.typeId" placeholder="请输入"></v-input>
-                    </v-form-item>
-                     <v-form-item label="申请时间" prop="startTime">
-                        <v-date-picker style="width: 100px;" placeholder="选择开始时间"  clearable show-time v-model="ruleForm.startTime"></v-date-picker>
-                    </v-form-item>
-                      <v-form-item label="到" prop="endTime">
-                        <v-date-picker style="width: 100px;" placeholder="选择结束时间" clearable show-time v-model="ruleForm.endTime"></v-date-picker>
-                    </v-form-item>
-                      <v-form-item>
-                        <v-button type="primary" html-type="button" @click="onSearch">查询</v-button>
-                        <v-button type="ghost" @click.prevent="resetForm('ruleForm')">清空条件</v-button>
-                    </v-form-item>
-                </v-col>
-            </v-row>  
-        </v-form>
+        <count-form
+            :ruleForm='ruleForm'
+            @updaydata='updaydata'
+            @updayalldata='updayalldata'
+            @downloadFile='downloadFile'
+            @onSearch='onSearch'>
+        </count-form>
+        <br>
         <div class="data-gird" :style="`height:${gridHeight};text-align:left`">
             <v-data-table :data='getData' :currentData="cartlistData" :columns='columns'>
                 <template slot="td" slot-scope="props">
-                    <div v-if="props.column.field=='operation'">
-                        <v-button type="primary" size="small" @click="showDetailmodel(props.item)">详情</v-button>
-                    </div>
-                    <div v-else-if="props.column.field=='headImgUrl'">
-                        <img :src="props.content" style="width:50px" :key="props.content" >
-                    </div>
-                    <div v-else-if="props.column.field=='sex'">
+                    <div v-if="props.column.field=='sex'">
                         <div v-if="props.content=='0'">未知</div>
                         <div v-if="props.content=='1'">男</div>
                         <div v-if="props.content=='2'">女</div>
-                    </div>
-                    <div v-else-if="props.column.field=='totalCommission'">
-                        {{props.item.unit}}{{props.content}}   
-                    </div>
-                    <div v-else-if="props.column.field=='source'">
-                        <div v-if="props.content=='1'">微信</div>
-                        <div v-if="props.content=='2'">注册登陆</div>
-                        <div v-if="props.content=='3'">Instagram</div>
-                    </div>
-                     <div v-else-if="props.column.field=='userType'">
-                        <div v-if="props.content=='0'">普通用户</div>
-                        <div v-if="props.content=='1'">店主</div>
                     </div>
                     <span v-else v-html="props.content"></span>
                 </template>
@@ -66,22 +31,15 @@
                 :show-total="showTotal"
                 ></v-pagination>
             </v-col>
-            <!-- <template >
-                <v-col span="20"></v-col>
-                <v-col span="4">
-                    <v-button style="text-align:right;" v-if="currentPage>1" @click="pageDec"><v-icon type="left"></v-icon></v-button>
-                    <v-button style="text-align:right;" @click="pageAdd"><v-icon type="right"></v-icon></v-button>
-                </v-col>
-            </template> -->
+          
         </div>
-        <detail-partner :detailVisible=detailVisible :listData=listData @changeBul="bulState"></detail-partner>
     </v-content>
 </template>
 
 <script>
 import api from "./api.js";
 import transform from '@/util/transform.js'
-import detailPartner from "./detailPartner/detailPartner"
+import CountForm from '@/components/count_form/countform'
 export default {
     name: "user-partners",
     data() {
@@ -109,20 +67,23 @@ export default {
     },
     created() {
         this.columns = [
-            { title: "用户ID", field: "userId" },
-            { title: "店铺ID", field: "typeId" },
-            { title: "用户头像", field: "headImgUrl" },
-            { title: "用户昵称", field: "nickname" },
-            { title: "用户性别", field: "sex" },
-            { title: "注册类型", field: "source" },
-            { title: "注册平台", field: "platform" },
-            { title: "申请时间",field: "applyTime"},
-            { title: "用户资产", field: "totalCommission" }, 
-            { title: "操作",field: "operation"}
+            { title: "时间", field: "userId" },
+            { title: "数值", field: "typeId" },
+            { title: "标准值", field: "nickname" },
+            { title: "差值", field: "sex" },
         ]
     },
     mounted() {},
     methods:{
+        updaydata(){
+
+        },
+        updayalldata(){
+
+        },
+        downloadFile(){
+
+        },
         resetForm(formName){
             this.$refs[formName].resetFields();
         },
@@ -205,8 +166,8 @@ export default {
         },
     },
     components: {
-            detailPartner
-        }
+        CountForm:CountForm
+    }
 };
 </script>
 

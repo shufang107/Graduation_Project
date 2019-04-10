@@ -10,24 +10,20 @@ const operate = resolve => require(['@/pages/operate/operate'],resolve);
 const operateSpugoods = resolve => require(['@/pages/operate/spugoods/spugoods'],resolve);
 const operateSkugoods = resolve => require(['@/pages/operate/skugoods/skugoods'],resolve);
 const operateProduct = resolve => require(['@/pages/operate/product/product'],resolve);
-// const operateFlashsale = resolve => require(['@/pages/operate/flashsale/flashsale'],resolve);
-// const operateAdvertisement = resolve => require(['@/pages/operate/advertisement/advertisement'],resolve);
-// const operateGift = resolve => require(['@/pages/operate/gift/gift'],resolve);
-// const operateGiftsale = resolve => require(['@/pages/operate/giftsale/giftsale'],resolve);
 
 //客户模块
 const user = resolve => require(['@/pages/user/user'], resolve);
 const userRegisters = resolve => require(['@/pages/user/registers/registers'], resolve);
 const userNormalusers = resolve => require(['@/pages/user/normalusers/normalusers'], resolve);
 const userPartners = resolve => require(['@/pages/user/partners/partners'], resolve);
-const userPortrait = resolve => require(['@/pages/user/portrait/portrait'], resolve);
-const userOrders = resolve => require(['@/pages/user/orders/orders'], resolve);
-const userLogistics = resolve => require(['@/pages/user/logistics/logistics'], resolve);
-const userAssets = resolve => require(['@/pages/user/assets/assets'], resolve);
-const userBalance = resolve => require(['@/pages/user/balance/balance'], resolve);
-const teamRule = resolve => require(['@/pages/user/teamRule/teamRule'], resolve);
-const teamList = resolve => require(['@/pages/user/teamList/teamList'], resolve);
-const teamProfit = resolve => require(['@/pages/user/teamProfit/teamProfit'], resolve);
+// const userPortrait = resolve => require(['@/pages/user/portrait/portrait'], resolve);
+// const userOrders = resolve => require(['@/pages/user/orders/orders'], resolve);
+// const userLogistics = resolve => require(['@/pages/user/logistics/logistics'], resolve);
+// const userAssets = resolve => require(['@/pages/user/assets/assets'], resolve);
+// const userBalance = resolve => require(['@/pages/user/balance/balance'], resolve);
+// const teamRule = resolve => require(['@/pages/user/teamRule/teamRule'], resolve);
+// const teamList = resolve => require(['@/pages/user/teamList/teamList'], resolve);
+// const teamProfit = resolve => require(['@/pages/user/teamProfit/teamProfit'], resolve);
 
 
 //系统模块
@@ -77,26 +73,6 @@ export default [
                 path: 'operate-product',
                 component:operateProduct
             },
-            // {
-            //     name:'operate-flashsale',
-            //     path: 'operate-flashsale',
-            //     component:operateFlashsale 
-            // },
-            // {
-            //     name:'operate-advertisement',
-            //     path: 'operate-advertisement',
-            //     component:operateAdvertisement
-            // },
-            // {
-            //     name:'operate-gift',
-            //     path: 'operate-gift',
-            //     component:operateGift
-            // },
-            // {
-            //     name:'operate-giftsale',
-            //     path:'operate-giftsale',
-            //     component:operateGiftsale
-            // }
         ]
     },
 
@@ -119,46 +95,6 @@ export default [
                 name:'user-partners',
                 path: 'user-partners',
                 component:userPartners
-            },
-            {
-                name:'user-portrait',
-                path: 'user-portrait',
-                component:userPortrait
-            },
-            {
-                name:'user-orders',
-                path: 'user-orders',
-                component:userOrders
-            },
-            {
-                name:'user-logistics',
-                path: 'user-logistics',
-                component:userLogistics
-            },
-            {
-                name:'user-assets',
-                path: 'user-assets',
-                component:userAssets
-            },
-            {
-                name:'user-balance',
-                path: 'user-balance',
-                component:userBalance
-            },
-            {
-                name:'team-rule',
-                path: 'team-rule',
-                component:teamRule
-            },
-            {
-                name:'team-list',
-                path: 'team-list',
-                component:teamList
-            },
-            {
-                name:'team-profit',
-                path: 'team-profit',
-                component:teamProfit
             },
         ]
     },

@@ -59,12 +59,6 @@
                       <v-tab-pane tab-key="1" tab="近14小时数据">
                         <g2-line :charData="servenData" id='c1'></g2-line>
                       </v-tab-pane>
-                      <!-- <v-tab-pane tab-key="2" tab="14天">
-                        <g2-line :charData="fourteenData" id='c2'></g2-line>
-                      </v-tab-pane>
-                      <v-tab-pane tab-key="3" tab="30天">
-                        <g2-line :charData="thirtyData" id='c3'></g2-line>
-                      </v-tab-pane> -->
                     </v-tabs>
                   </div>
               </v-row>              
@@ -103,7 +97,7 @@
                       <h2>浑浊度</h2>
                       <v-tabs active-tab-key="1">
                         <v-tab-pane tab-key="1" tab="近14小时数据">
-                          <g2-line2 :charData="servenSaleData" :id="'c4'"></g2-line2>
+                          <g2-line2 :charData="servenSaleData" :id="'c2'"></g2-line2>
                         </v-tab-pane>
                         <!-- <v-tab-pane tab-key="2" tab="14天">
                           <g2-line2 :charData="fourteenSaleData" :id="'c5'"></g2-line2>
@@ -148,7 +142,7 @@
                       <h2>温度</h2>
                       <v-tabs active-tab-key="1">
                         <v-tab-pane tab-key="1" tab="近14小时数据">
-                          <g2-line2 :charData="servenSaleData" :id="'c5'"></g2-line2>
+                          <g2-line2 :charData="servenSaleData" :id="'c3'"></g2-line2>
                         </v-tab-pane>
                         <!-- <v-tab-pane tab-key="2" tab="14天">
                           <g2-line2 :charData="fourteenSaleData" :id="'c5'"></g2-line2>

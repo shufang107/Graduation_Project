@@ -1,19 +1,39 @@
 <template>
   <v-content class="operate-product-wrap">
-    <new-add :addVisible="addVisible" v-on:changeBul="bulState"></new-add>
-    <pro-edit :editVisible="editVisible" :specialId="selectSpecial" v-on:changeBul="bulState"></pro-edit>
-    <pro-detail :detailVisible="detailVisible" :specialId="selectSpecial" v-on:changeBul="bulState"></pro-detail>
+    
+    <v-row type="flex">
+      <v-col span="24">
+        <h1>今日数据曲线</h1>
+      </v-col>
+    </v-row>
+
+    <v-row type="flex">
+      <v-col span="24">
+        <g2-line :charData="servenData" id='c2'></g2-line>
+      </v-col>
+    </v-row>
+    
+    <br>
+    <v-row type="flex">
+      <v-col span="24">
+        <h1>历史数据曲线</h1>
+      </v-col>
+    </v-row>
+
+    <v-row type="flex">
+      <v-col span="24">
+        <g2-line :charData="thirtyData" id='c3'></g2-line>
+      </v-col>
+    </v-row>
   </v-content>
 </template>
 
 <script>
 import api from "./api.js";
 import transform from "@/util/transform.js";
-import newAdd from "./newadd/newadd";
-import proEdit from "./proedit/proedit";
-import proDetail from "./prodetail/prodetail";
+import moment from 'moment'; 
+import momenttimezone from 'moment-timezone';
 import G2Line from "@/components/cg2line/cg2line";
-import moment from "moment";
 export default {
   name: "operate-product",
   data() {
@@ -26,6 +46,12 @@ export default {
       detailVisible: false,
       spuId: "",
       spStatus: "",
+      servenData: [],
+      fourteenData: [],
+      thirtyData:[],
+      servenSaleData: [],
+      fourteenSaleData: [],
+      thirtySaleData:[],
       rangeTime:['',''],
       gridHeight: "500px",
       gridWidth: "800px",
@@ -72,10 +98,23 @@ export default {
       { title: "结束时间", field: "spEndTime",width:"20"},
       { title: "操作", field: "album",width:"45" }
     ];
-    // this.loadData();
+    this.getorderchar();
   },
   mounted() {},
   methods: {
+    getdate(){
+      var currentTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+      var utcTime = moment(new Date()).utc().format('YYYY-MM-DD HH:mm:ss');   
+      var amTime = moment.tz(new Date(), "America/Los_Angeles").format('YYYY-MM-DD HH:mm:ss');    
+      var timeDiff = moment(currentTime).unix() - moment(utcTime).unix(); 
+      var amtimeDiff = moment(amTime).unix() - moment(utcTime).unix(); 
+      var amunixTime = moment(currentTime).unix() - timeDiff + amtimeDiff;
+      this.endamtime = moment(amunixTime * 1000).format('YYYY-MM-DD') + '';
+      //获取前30天日期
+      this.lart30 = moment().subtract('days', 29).format('YYYY-MM-DD');
+      this.dayquery = ' {date:"'+ this.endamtime + '"}'; 
+      return this.dayquery,this.lart30,this.endamtime;
+    },
     pageChange(page) {
       let _this = this;
       _this.currentPage = page;
@@ -253,14 +292,69 @@ export default {
     },
     onSearch() {
         this.pageChange(1);
+    },
+    getorderchar() {
+      var _this = this;
+      this.getdate();
+      return _this.$http
+      .get(api.getMongoFindResult,{
+        params:{
+          collection:'day_order',
+          currentPage: 1,
+          numsPerPage: 30,
+          query:`{"date":{$gte:"${_this.lart30}",$lte:"${_this.endamtime}"}}`,
+          sort:'{date:-1}',
+        }
+      })
+      .then(res => {
+        var or_seventemparr = [];
+        var or_fourteentemparr = [];
+        var or_thirtytemparr = [];
+        var sa_seventemparr = [];
+        var sa_fourteentemparr = [];
+        var sa_thirtytemparr = [];
+        for(var i=0 ; i < 7 ; i++){
+          or_seventemparr.push({
+            year : res.data.items[i].date,
+            value : res.data.items[i].orderCount
+          });
+          sa_seventemparr.push({
+            year : res.data.items[i].date,
+            value : res.data.items[i].totalTransaction
+          })
+        }
+        for(var i=0 ; i < 14 ; i++){
+          or_fourteentemparr.push({
+            year : res.data.items[i].date,
+            value : res.data.items[i].orderCount
+          });
+          sa_fourteentemparr.push({
+            year : res.data.items[i].date,
+            value : res.data.items[i].totalTransaction
+          })
+        }
+        for(var i=0 ; i < res.data.items.length ; i++){
+          or_thirtytemparr.push({
+            year : res.data.items[i].date,
+            value : res.data.items[i].orderCount
+          });
+          sa_thirtytemparr.push({
+            year : res.data.items[i].date,
+            value : res.data.items[i].totalTransaction
+          })
+        }
+        _this.servenData = or_seventemparr;
+        _this.fourteenData = or_fourteentemparr;
+        _this.thirtyData = or_thirtytemparr;
+        _this.servenSaleData = sa_seventemparr;
+        _this.fourteenSaleData = sa_fourteentemparr;
+        _this.thirtySaleData = sa_thirtytemparr;
+      })
     }
   },
 
   components: {
-    newAdd,
-    proEdit,
     G2Line: G2Line,
-    proDetail
   }
 };
 </script>

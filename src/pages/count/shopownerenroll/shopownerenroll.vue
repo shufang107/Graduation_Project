@@ -1,29 +1,10 @@
 <template>
  
     <v-content class="shopownerenroll">
-        <v-form class="search-from" :model="ruleForm" ref="ruleForm">
-            <v-row class="demo-row">
-                <v-col span="18">
-                    <v-form-item label="开始时间"  prop="startTime">
-                        <v-date-picker style="width: 100px;" placeholder="选择开始时间"  clearable v-model="ruleForm.startTime"></v-date-picker>
-                    </v-form-item>
-                    <v-form-item label="至" prop="endTime">
-                        <v-date-picker style="width: 100px;" placeholder="选择结束时间" clearable v-model="ruleForm.endTime"></v-date-picker>
-                    </v-form-item>
-                    <v-form-item>
-                        <v-button type="primary" @click="onSearch(ruleForm)">查询</v-button>&nbsp;&nbsp;
-                        <v-button type="ghost" @click.prevent="resetForm('ruleForm')">清空条件</v-button>&nbsp;&nbsp;
-                        <v-button type="primary" @click="downloadFile">下载结果</v-button>&nbsp;&nbsp;
-                        <v-button type="primary" @click="updaydata">更新当天数据</v-button>&nbsp;&nbsp;
-                        <v-button type="primary" @click="updayalldata">更新全部数据</v-button>
-                   </v-form-item>
-                </v-col>
-            </v-row>
-        </v-form>
-       <br>
-    
        <div :style="`height:${gridHeight};width:${gridWidth};text-align:left`">
-           <v-data-table :data='getData' :columns='columns' :currentData='cartlistData'></v-data-table>
+           <v-data-table :data='getData' :columns='columns' :currentData='cartlistData'>
+
+           </v-data-table>
            <br>
             <v-pagination
                 style="text-align:right;"
@@ -66,15 +47,10 @@ export default {
         this.gridHeight = document.body.clicentHeight - 280 + 'px';
         this.gridWidth = document.body.clicentWidth - 180 + 'px';
         this.columns = [
-            { title: "日期", field: "date"},
-            { title: "新注册用户", field: "newUser"},
-            { title: "累计用户", field: "allUser" },
-            { title: "活跃用户", field: "payUser"},
-            { title: "新店主", field: "newShopkeeper"},
-            { title: "累计店主", field: "allShopkeeper" },
-            { title: "开单店主", field: "saleUser" },
-            { title: "下单店主", field: "payShopkeeper" },
-            { title: "自购店主", field: "selfPayShopkeeper" },
+            { title: "时间", field: "date"},
+            { title: "数值", field: ""},
+            { title: "标准值", field: "" },
+            { title: "差值", field: ""},
         ];
     },
     mounted() {},

@@ -17,8 +17,8 @@
         :value="currentPage"
         :show-total="showTotal"
       ></v-pagination>
-    <edit-spu :editVisible="editVisible" :listData="listData" v-on:changeBul="bulState"></edit-spu>
-    <detail-spu :detailVisible="detailVisible" :spuDatailId="spuDatailId" v-on:changeBul="bulState"></detail-spu>
+    <!-- <edit-spu :editVisible="editVisible" :listData="listData" v-on:changeBul="bulState"></edit-spu>
+    <detail-spu :detailVisible="detailVisible" :spuDatailId="spuDatailId" v-on:changeBul="bulState"></detail-spu> -->
     <v-modal 
        title="上传详情"
        :visible="visible"
@@ -46,8 +46,8 @@
 <script>
 import api from "./api.js";
 import transform from "@/util/transform.js";
-import editSpu from "./editspu/editspu";
-import detailSpu from "./detailspu/detailspu";
+// import editSpu from "./editspu/editspu";
+// import detailSpu from "./detailspu/detailspu";
 import request from "@/util/ajax.js";
 import setting from "@/setting/index.js";
 
@@ -307,10 +307,10 @@ export default {
       return `总共` + this.dataTotal + `条数据`;
     },
   },
-  components: {
-    editSpu,
-    detailSpu,
-  }
+  // components: {
+  //   editSpu,
+  //   detailSpu,
+  // }
 };
 </script>
 

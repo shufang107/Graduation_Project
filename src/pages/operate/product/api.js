@@ -10,5 +10,6 @@ const api = {
     "offline_special": "/base/special/admin/offline_special", //下线专场接口
     "online_special": "/base/special/admin/online_special", //上线接口
     "del_special": "/base/special/admin/del_special", //删除专场
+    "getMongoFindResult":"/statistics/oscartStatisticsService/statistics/mongodb/getMongoFindResult",
   }
 export default api
