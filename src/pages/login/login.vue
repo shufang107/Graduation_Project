@@ -1,6 +1,6 @@
 <template>
   <v-content class="login">
-    <v-card title="欢迎登陆 OSCART ADMIN" class="login-con" :bordered="false">
+    <v-card title="欢迎登陆" class="login-con" :bordered="false">
       <div class="login-form">
         <v-form class="sub-form" direction="vertical">
           <v-form-item label>
@@ -88,11 +88,6 @@ export default {
             _this.$message.error("登录失败:" + res.msg, 1);
           }
         });
-
-      // _this.$message.success("登录成功!", .5);
-      // setTimeout(() => {
-      //   _this.$router.push("/index");
-      // }, 1000);
     }
   }
 };

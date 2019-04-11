@@ -54,7 +54,7 @@
             <div>
               <v-row>  <!--左边二层图表-->
                   <div class="card-content">
-                    <h2>PH值</h2>
+                    <h2 style="text-align:center">PH值</h2>
                     <v-tabs active-tab-key="1">
                       <v-tab-pane tab-key="1" tab="近14小时数据">
                         <g2-line :charData="servenData" id='c1'></g2-line>
@@ -69,6 +69,7 @@
           <v-col span="7" class="tabpag">  
             <template>
               <div class="data-gird" :style="`text-align:left;margin-bottom:10px `">
+                <h2 style="text-align:center">今日PH数据</h2>
                 <v-data-table :data='sp_getData' :columns='todayColumns' :currentData='sp_cartlistData' :emptyText="'暂时没有数据...'">
                     <template slot="td" slot-scope="props">
                         <div v-if="props.column.field == 'userImage'">
@@ -94,17 +95,11 @@
             <div>
               <v-row> <!--左边三层图表-->
                     <div class="card-content">
-                      <h2>浑浊度</h2>
+                      <h2 style="text-align:center">浑浊度</h2>
                       <v-tabs active-tab-key="1">
                         <v-tab-pane tab-key="1" tab="近14小时数据">
                           <g2-line2 :charData="servenSaleData" :id="'c2'"></g2-line2>
                         </v-tab-pane>
-                        <!-- <v-tab-pane tab-key="2" tab="14天">
-                          <g2-line2 :charData="fourteenSaleData" :id="'c5'"></g2-line2>
-                        </v-tab-pane>
-                        <v-tab-pane tab-key="3" tab="30天">
-                          <g2-line2 :charData="thirtySaleData" :id="'c6'"></g2-line2>
-                        </v-tab-pane> -->
                       </v-tabs>
                     </div>
                 </v-row>
@@ -114,6 +109,7 @@
           <v-col span="7" class="tabpag">
             <template class="tabbackground">
               <div class="data-gird" :style="`text-align:left;margin-bottom:10px `">
+                <h2 style="text-align:center">今日浑浊度数据</h2>
                 <v-data-table :data='go_getData' :columns='todaygoodsColumns' :currentData='go_cartlistData' :emptyText="'暂时没有数据...'">
                     <template slot="td" slot-scope="props">
                         <div v-if="props.column.field == 'productImage'">
@@ -139,17 +135,11 @@
             <div>
               <v-row> <!--左边三层图表-->
                     <div class="card-content">
-                      <h2>温度</h2>
+                      <h2 style="text-align:center">温度</h2>
                       <v-tabs active-tab-key="1">
                         <v-tab-pane tab-key="1" tab="近14小时数据">
                           <g2-line2 :charData="servenSaleData" :id="'c3'"></g2-line2>
                         </v-tab-pane>
-                        <!-- <v-tab-pane tab-key="2" tab="14天">
-                          <g2-line2 :charData="fourteenSaleData" :id="'c5'"></g2-line2>
-                        </v-tab-pane>
-                        <v-tab-pane tab-key="3" tab="30天">
-                          <g2-line2 :charData="thirtySaleData" :id="'c6'"></g2-line2>
-                        </v-tab-pane> -->
                       </v-tabs>
                     </div>
                 </v-row>
@@ -159,6 +149,7 @@
           <v-col span="7" class="tabpag">
             <template class="tabbackground">
               <div class="data-gird" :style="`text-align:left;margin-bottom:10px `">
+                <h2 style="text-align:center">今日温度数据</h2>
                 <v-data-table :data='go_getData' :columns='todaygoodsColumns' :currentData='go_cartlistData' :emptyText="'暂时没有数据...'">
                     <template slot="td" slot-scope="props">
                         <div v-if="props.column.field == 'productImage'">
